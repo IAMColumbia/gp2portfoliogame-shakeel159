@@ -1,1 +1,9 @@
 Release Notes version 1 POC
+
+At the moment no goals.
+
+POC completed list:
+
+add map layout || 3 rooms player can go in and out of
+
+add player movement and mouse direction look
