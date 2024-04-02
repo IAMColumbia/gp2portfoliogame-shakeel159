@@ -14,12 +14,10 @@ public class Player : Humans
     public float attackRanf = .6f;
     public LayerMask enemyyLayers;
     private bool isAttacking = false;
-    private float maxHealth;
-    //private float currentStamina;
-    private Vector2 knockBack;
 
     CapsuleCollider2D playerCollider;
 
+    public GameObject UI_Restart;
 
     // Start is called before the first frame update
     void Start()
@@ -37,23 +35,32 @@ public class Player : Humans
         currentHealth = maxHealth;
         attackDmg = 10;
         fireDmg = 35;
-        knockBack = new Vector2(-3f, 0.0f);
+        knockBack = new Vector2(5f, 0.0f);
 
-        DisplayStats();
+        //DisplayStats();
         isHit = false;
     }
     // Update is called once per frame
     void Update()
     {
-        if(playerState == PlayerState.Dead)
+        Vector2 playerFacingDirection = control.GetPlayerFacingDirection();
+
+        if (playerState == PlayerState.Dead)
         {
-            //When Player is Dead
-            Debug.Log("Player has Died");
+            Time.timeScale = 0f; // Pause time
+            UI_Restart.SetActive(true);
+        }
+        if(playerState == PlayerState.Alive)
+        {
+            Time.timeScale = 1f; // Pause time
         }
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-
+        if(other.gameObject.tag == "Zombie")
+        {
+            DmgTaken(25);
+        }
     }
 
     public override void DmgTaken(float damage)
@@ -61,14 +68,14 @@ public class Player : Humans
         base.DmgTaken(damage);
         control.inStun = true;
         isHit = true;
-        control.rb.AddForce(knockBack, ForceMode2D.Impulse);
+        //control.rb.AddForce(knockBack, ForceMode2D.Impulse);
+        
     }
 
 
-    public override void BasicAttack(float dmg)     //RAPEATING CODE HERE CANT THINK OF SOLUTION AT MOOMENT  BESIDES GOING ONE ATTACKPOINT ROUTE
+    public override void BasicAttack(float dmg)     
     {
         isAttacking = true;
-        //enemy.GetComponent<EnemyPotrol>().DmgTaken(attackDmg);
 
     }
     private void Die()

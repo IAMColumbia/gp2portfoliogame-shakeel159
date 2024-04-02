@@ -1,1 +1,35 @@
 Release Notes version 2 Vertical Slice
+
+ASSERTS USED: 
+https://laplas-games-inc.itch.io/top-down-shooter-asset-pack
+
+
+Gaosl for this Version: system for enemeis to spawn and move
+
+- Get Temp Enemies in scene
+- create a  spawner that allows certien amount of enemies to spawn over time
+- give enemies state conditions for wanting to enter the house first before chasing the enemy
+
+
+Step one process:
+
+create a spwner that instantiates enemies at its lcation.(DONE)
+
+TCHNICAL DEPTH: THERE WAS MEANT TO BE ONLY ONE ENEMY SPAWNER BUT ENDED UP CREATING ONLY A LOCATION SPOT FOR SPAWNING  
+
+creata barriers where player cant pass but meant ro hold zombies until broken.
+ these barriesrs also represent where zombies will go bfore chasing player in house 
+ the Barrier needs to break over time when in collison with zombies, 
+	following plan: 
+		create barrier script wich when on collision with zombie decrease health over time until destroyed.
+ Zombie state changes from wanting to break barrier to chasing player.
+
+Step Two Process:
+	
+Let player shoot zombies
+
+TECHNICAL DEPTH TO ADRESS: hardcode player shooting behaviour or pattern but later adjust to fit behave
+differently based on type of weapon.
+
+as of right now player shoots with moughclick at forword diraction and on collision with enemy decrease health
+

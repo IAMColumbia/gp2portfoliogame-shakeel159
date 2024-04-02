@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Room
+  - Barrier
+  - bullet
+  - Zombie
   layers:
   - Default
   - TransparentFX
