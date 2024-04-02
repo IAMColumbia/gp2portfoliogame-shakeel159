@@ -1,5 +1,7 @@
 Release Notes version 2 Vertical Slice
 
+//HOMEWORK QUESTION AT BOTTOM 
+
 ASSERTS USED: 
 https://laplas-games-inc.itch.io/top-down-shooter-asset-pack
 
@@ -32,4 +34,21 @@ TECHNICAL DEPTH TO ADRESS: hardcode player shooting behaviour or pattern but lat
 differently based on type of weapon.
 
 as of right now player shoots with moughclick at forword diraction and on collision with enemy decrease health
+same logic applies to when player is in contact with zombie, players takes damage.
+
+//HW QUESTION HERE
+
+Leave Developer Log in Wiki with:
+
+How did you mange dependencies and state in your game?
+There is a subClass called 'human' that hold all logic of how a living organism will interact in this world.
+for example the class 'human holds methods such a when taken damage, when attacking, track state of object such as if its Alive or Dead. classes such as 'ZombieBehaviour' and 'Player' depend on the subclass which allows for easy method implementation and logic of when Alive and Dead.
+Another major dependency is from 'player' script to "playerControl' script. 'playercontrol' script takes player input and set proper components where then it leaves 'player' script to only hold the logic of how player will interact with gameobjects in scene
+What Systems/Patterns are used?
+Flyweight light pattern was attempted but due to it not working entierly and time constraints that is on hold.
+How is the game structured and why did you structure it like that?
+
+What still doesn't work, what could work better?
+
+everything i tried to work on this prototype works to an extend. i am not happy with ZombieSpawners since i could see them being used by a scriptableObject to implement FlyWeight pattern(will work on it) and how zombie behaviour works. there is no pathfinding so zombies get stuck behind walls when player is on the other side.
 
