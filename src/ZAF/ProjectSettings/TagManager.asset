@@ -8,6 +8,10 @@ TagManager:
   - Barrier
   - bullet
   - Zombie
+  - wall
+  - LevelManager
+  - Hubs
+  - obj
   layers:
   - Default
   - TransparentFX

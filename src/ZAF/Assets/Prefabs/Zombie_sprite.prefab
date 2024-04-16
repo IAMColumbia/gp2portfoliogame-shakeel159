@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7039701630933487075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.820934, y: 0.13917127, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -110,9 +110,12 @@ MonoBehaviour:
   knockBack: {x: 0, y: 0}
   enemyState: 0
   moveSpeed: 5
+  collisionStartTime: 0
   doors: []
   attackDamagePerSecond: 10
   damageInterval: 10
+  rb: {fileID: 5731956336258203233}
+  lvl: {fileID: 0}
 --- !u!58 &6566213770956431916
 CircleCollider2D:
   m_ObjectHideFlags: 0

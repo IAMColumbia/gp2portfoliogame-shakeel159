@@ -1,1 +1,12 @@
 Release Notes version 3 Final
+
+
+Goals for this build:
+
+-Fix zombie behaviour of getting stuck on wall do to no path finding
+	todo: if(zombie in collision with wall for 2 secounds)
+		move zombie along the wall until zombie can enter where player is
+-Fix techiniqual depth witch Zombie Spawner, currently 3 zombie spawners exists when i feel as if there should be only one controlling where zombies spawn.
+
+-Fix collision/damage between zombie and barrier, at moment barrier breaks in one hit.
+	todo: if solution is unclear go the easy route which is each collision zombie deals damage and gets pushed back for easy collision break 
