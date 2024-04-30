@@ -1,1 +1,13 @@
 Release Notes version 3 Final
+
+Goal:
+
+-fix berriar codeto hold different states // for better tracking of time and state of barrier
+-start work on different weapons
+-start work on mystary box or store system
+
+Steps To Take/Taken
+Goal One: Barrier
+the barreir now has 2 different states at are being used, original state only holds bool value stating that it is not broken; if it is broken via health <= 0 state changes to broken;
+that state is then registered to zombies in scene so they can change there own state to chasing barrier(if barrier active) to chasing player.
+(DONE)

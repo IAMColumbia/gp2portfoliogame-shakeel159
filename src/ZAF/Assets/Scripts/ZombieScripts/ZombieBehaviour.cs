@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using Debug = UnityEngine.Debug;
 
 public class ZombieBehaviour : Humans
@@ -22,12 +24,11 @@ public class ZombieBehaviour : Humans
     private bool isDestroyingBarrier;
     private bool isbarrierDestroyed;
     private float barrierDmg;
+    public float barrierTimer;
 
-    public float attackDamagePerSecond = 10f;
-    public float damageInterval = 100f; // Time interval between damage ticks
 
     public Rigidbody2D rb;
-    public LevelCount lvl;
+    public LevelCount lvls;
 
     // Start is called before the first frame update
     void Start()
@@ -37,10 +38,9 @@ public class ZombieBehaviour : Humans
         currentHealth = maxHealth;
         attackDmg = 50;
         fireDmg = 35;
-        barrierDmg = 10;
+        barrierDmg = 50;
 
-        moveSpeed = 4f;
-        knockBack = new Vector2(-5f, -10f);
+        moveSpeed = 3f;
 
         //DisplayStats();
         isHit = false;
@@ -49,13 +49,24 @@ public class ZombieBehaviour : Humans
         doors = GameObject.FindGameObjectsWithTag("Barrier");
         hubs = GameObject.FindGameObjectsWithTag("Hubs");
 
+        // Find the GameObject with the LevelCount script attached to it
+        GameObject levelCountObject = GameObject.Find("LevelManager");
+
+        lvls = levelCountObject.GetComponent<LevelCount>();
         isDestroyingBarrier = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if(lvls.currentRound == 5)
+        {
+            moveSpeed = 4;
+        }
+        if(lvls.currentRound == 10)
+        {
+            moveSpeed = 5;
+        }
         switch (playerState)
         {
             case PlayerState.Alive:
@@ -69,31 +80,36 @@ public class ZombieBehaviour : Humans
                 break;
         }
 
-
         switch (enemyState)
         {
             case EnemyState.chasingBarrier:
-                bool closestDoorIsActive;
-                GameObject closestDoor = FindClosestDoor(out closestDoorIsActive);
-                if (closestDoorIsActive == false)
+                FindClosestDoor();
+                BarrierObj otherScript = target.GetComponent<BarrierObj>();
+                isbarrierDestroyed = otherScript.isBrokenState;
+                if (isbarrierDestroyed == false)
+                {
+                    chaseTowardsTarget(target);
+                }
+                else
                 {
                     enemyState = EnemyState.chasingPlayer;
-                }
-                if (doors.Length > 0)
-                {
-
-                    if (closestDoor != null && closestDoorIsActive)
-                    {
-                        chaseTowardsTarget(closestDoor);
-                    }
                 }
                 break;
             case EnemyState.beakBarrier:
                 ///this.rb.AddForce(knockBack, ForceMode2D.Impulse);
-                
+                FindClosestDoor();
+                BarrierObj _barrier = target.GetComponent<BarrierObj>();
+                barrierTimer = _barrier.takeDamageTimer;
                 isDestroyingBarrier = true;
-    
-                //enemyState = EnemyState.chasingBarrier;
+                isbarrierDestroyed = _barrier.isBrokenState;
+                if (barrierTimer == 0)
+                {
+                    DealDamageOverTime(_barrier);
+                }
+                if (isbarrierDestroyed == true)
+                {
+                    enemyState = EnemyState.chasingPlayer;
+                }
                 break;
             case EnemyState.chasingPlayer:
                 target = GameObject.FindGameObjectWithTag("Player");
@@ -106,7 +122,6 @@ public class ZombieBehaviour : Humans
                 GameObject closestHub = FindClosestHub(out findingClosestHub);
                 if (findingClosestHub == true)
                 {
-                    Debug.Log("CHASING CLOSEST HUB" + closestHub);
                     chaseTowardsTarget(closestHub);
                 }
                 break;
@@ -115,27 +130,19 @@ public class ZombieBehaviour : Humans
 
 
     }
-    GameObject FindClosestDoor(out bool doorIsActive)
+    void FindClosestDoor()
     {
-        GameObject closestDoor = null;
-        float shortestDistance = Mathf.Infinity;
-
-        doorIsActive = false; // Initialize doorIsActive to false
-
-        foreach (GameObject door in doors)
+        GameObject[] barrierObjects = GameObject.FindGameObjectsWithTag("Barrier");
+        float closestDistance = Mathf.Infinity;
+        foreach (GameObject barrier in barrierObjects)
         {
-            float distance = Vector3.Distance(transform.position, door.transform.position);
-            if (distance < shortestDistance)
+            float distance = Vector3.Distance(transform.position, barrier.transform.position);
+            if (distance < closestDistance)
             {
-                shortestDistance = distance;
-                closestDoor = door;
-
-                // Check if the closest door is active
-                doorIsActive = closestDoor.activeSelf;
+                closestDistance = distance;
+                target = barrier;
             }
         }
-
-        return closestDoor;
     }
     GameObject FindClosestHub(out bool isOnWall)
     {
@@ -164,7 +171,6 @@ public class ZombieBehaviour : Humans
     {
         if (this.transform.position == obj.transform.position)
         {
-            Debug.Log("CHANGE ZOMBIE STATE BACK TO CHASING PLAYER");
             enemyState = EnemyState.chasingPlayer;
         }
         // Calculate direction towards the closest door
@@ -184,16 +190,11 @@ public class ZombieBehaviour : Humans
             enemyState = EnemyState.beakBarrier;
             if (isDestroyingBarrier == true)
             {
-                //Damage barrier until destoyed before switching to chasing player
-                //assigne script to barrier that holds health variable
                 BarrierObj barrier = collision.collider.GetComponent<BarrierObj>();
-                //barrier.TakeDamage(attackDamagePerSecond * damageInterval);
-                // If barrier object and component exist
-                if (barrier != null)
+                
+                if (isbarrierDestroyed == false)
                 {
-                    // Deal damage to the barrier
-                    // Start coroutine to deal damage over time
-                    StartCoroutine(DealDamageOverTime(barrier));
+                    barrier.startTimer = true;    
                     
                 }
             }
@@ -201,34 +202,31 @@ public class ZombieBehaviour : Humans
         if (collision.gameObject.gameObject.tag == "wall")
         {
             isCollidingWithWall = true;
-            collisionStartTime++;
+            collisionStartTime += Time.deltaTime;
             if (collisionStartTime >= 6f)
             {
                 enemyState = EnemyState.stuckOnWall;
             }
         }
-        if (collision.gameObject.gameObject.tag == "obj" && enemyState == EnemyState.stuckOnWall)
-        {
-            enemyState = EnemyState.chasingPlayer;
-        }
-
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Player pl = Object.FindObjectOfType<Player>(); 
         if (collision.collider.gameObject.tag == "bullet")//Based on weapon change damage //create system/script that holds damage each weopon does
         {
             //currentHealth -= 55f;
+            pl.currency += 15;
             DmgTaken(55f);
         }
        
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.gameObject.tag == "wall")
         {
             isCollidingWithWall = false;
             collisionStartTime = 0;
-            if(enemyState == EnemyState.stuckOnWall)
+            if (enemyState == EnemyState.stuckOnWall)
             {
                 enemyState = EnemyState.chasingPlayer;
             }
@@ -241,20 +239,13 @@ public class ZombieBehaviour : Humans
             enemyState = EnemyState.chasingPlayer;
         }
     }
-    private System.Collections.IEnumerator DealDamageOverTime(BarrierObj barrier)
+    private void DealDamageOverTime(BarrierObj barrier)
     {
         if (barrier.currentHealth > 0)
         {
-            
-            //isDestroyingBarrier = false;
-            // Wait for the next damage interval
-            yield return new WaitForSeconds(3f);
-            // Deal damage to the barrier
             barrier.TakeDamage(barrierDmg);
-
         }
         //Debug.Log("BARRIER HEALTH DESTOYED" + barrier.currentHealth);
-        isbarrierDestroyed = true;
         enemyState = EnemyState.chasingPlayer;
 
     }

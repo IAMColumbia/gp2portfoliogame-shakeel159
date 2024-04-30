@@ -10,8 +10,8 @@ public class PlayerControl : MonoBehaviour
     public float playerSpeed;
 
     Vector2 movement;
-    public bool inStun = false;
     public bool isShooting;
+    public bool IsInteracting;
 
     public PlayerInput playerInput;
     public Rigidbody2D rb;
@@ -19,7 +19,14 @@ public class PlayerControl : MonoBehaviour
 
     private Vector2 MousePos;
     private Vector3 rawInputMovement;
+
+
+    public bool isSelectingWeaponPast;
+    public bool isSelectingWeaponNext;
+    public bool nextWeapon;
+    public bool prevWeapon;
     Vector2 lookDir;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +41,30 @@ public class PlayerControl : MonoBehaviour
         movement.x = Input.GetAxis("Horizontal");
         movement.y = Input.GetAxis("Vertical");
 
+        isSelectingWeaponNext = Input.GetKeyUp(KeyCode.E);
+        isSelectingWeaponPast = Input.GetKeyUp(KeyCode.Q);
+        if (isSelectingWeaponNext == true)
+        {
+            nextWeapon = true;
+        }
+        if (isSelectingWeaponPast == true)
+        {
+            prevWeapon = true;
+        }
+
         MousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
+        if (Input.GetKey(KeyCode.F))
+        {
+            Debug.Log("F PRESSED");
+            IsInteracting = true;
+        }
+
+        if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.K))
+        {
+            Debug.Log("QUITTING");
+            Application.Quit();
+        }
     }
     private void FixedUpdate()
     {
@@ -90,7 +119,6 @@ public class PlayerControl : MonoBehaviour
         {
             isShooting = true;
         }
-
     }
 
 }

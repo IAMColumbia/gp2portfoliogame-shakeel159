@@ -12,6 +12,7 @@ TagManager:
   - LevelManager
   - Hubs
   - obj
+  - MystryBox
   layers:
   - Default
   - TransparentFX

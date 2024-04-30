@@ -124,5 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f965e12bd01e9240b8890b3b3444e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   currentHealth: 0
-  newHealth: 0
+  state: 0
+  damageTimeout: 4
+  takeDamageTimer: 0
+  isBrokenState: 0
+  startTimer: 0
+  spriteRenderer: {fileID: 2485410408088668396}
+  boxCollider: {fileID: 1441396831}

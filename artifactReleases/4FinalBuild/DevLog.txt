@@ -1,0 +1,10 @@
+Goal: Get most if not all game components implemented
+
+Zombie Behaviour: Zombie Behaviour could use a mjor remapping, at moment it works with visual cues indicating imporoper behaviour from zombies.
+
+BarrierObject: barrier now has states in order to track consition barrier is in. taking advantage of the state system i allowed player to change state from broken to fully build to reset barrier state to implement player rebuilding barrier, another feature implemented. the change of statees is being done ine player script but its an on collision method which i did not see the need to change.
+
+Costs: in PLayer script there is now a variable counting currency. with amount of currency collected by killing zombies, player can build door($15) or buy new weapon($150) cuurently broken(weapon implementaion)
+
+Weapon Implementaion: the biggest new feature is the weapon system for player. now player can switch between weapons given with "Q" and "E". the weapons each have different shooting pattern and player can select each on and shoot but as of right now the player HAS all the weapons. currently working on system for player to purchase new weapon instead.  
+
