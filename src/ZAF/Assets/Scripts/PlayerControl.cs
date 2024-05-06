@@ -12,6 +12,10 @@ public class PlayerControl : MonoBehaviour
     Vector2 movement;
     public bool isShooting;
     public bool IsInteracting;
+    public bool isReloading;
+
+    //BACKUO METHOD
+    public static Action shootInput;
 
     public PlayerInput playerInput;
     public Rigidbody2D rb;
@@ -33,6 +37,8 @@ public class PlayerControl : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
+
+        isReloading = false;
     }
 
     // Update is called once per frame
@@ -43,6 +49,7 @@ public class PlayerControl : MonoBehaviour
 
         isSelectingWeaponNext = Input.GetKeyUp(KeyCode.E);
         isSelectingWeaponPast = Input.GetKeyUp(KeyCode.Q);
+        isReloading = Input.GetKey(KeyCode.R);
         if (isSelectingWeaponNext == true)
         {
             nextWeapon = true;
@@ -56,15 +63,18 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.GetKey(KeyCode.F))
         {
-            Debug.Log("F PRESSED");
             IsInteracting = true;
         }
 
-        if (Input.GetKey(KeyCode.Escape) || Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.Escape))
         {
-            Debug.Log("QUITTING");
             Application.Quit();
         }
+
+        //if(Input.GetMouseButton(0))
+        //{
+        //    shootInput?.Invoke();
+        //}
     }
     private void FixedUpdate()
     {

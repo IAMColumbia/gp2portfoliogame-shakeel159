@@ -10,12 +10,10 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static Player;
 
 public class Player : Humans
 {
-    public enum WeaponsActive { _Pistol = 0, _Ak = 1, _MTAR = 2 }
-    public WeaponsActive weaponActive;
-    
 
     private PlayerControl control;
     private SpriteRenderer playerSprite;
@@ -23,23 +21,28 @@ public class Player : Humans
     public float attackRanf = .6f;
     public bool fixingWall;
     public LayerMask enemyyLayers;
-    private bool isAttacking = false;
-    public int cuurentWeapon = 1;
+    public bool isAttacking = false;
     public int currency;
-    private int mystreyBoxAmount = 150;
+    public int mystreyBoxAmount = 150;
     private int amountToFix = 15;
+    public bool startTimer;
+    public bool inMenu;
 
     CapsuleCollider2D playerCollider;
 
     public TextMeshProUGUI UI_BarreirText;
-    public TextMeshProUGUI UI_CurrencyText;
     public GameObject UI_Restart;
-    public Shooting shooting;
+    public TextMeshProUGUI UI_AmmoCount;
 
-    private Pistol pistol;
-    private AK ak;
-    private MTAR tar;
+    private Shoot_Weapon InstantatieBulletScript;
 
+
+    public Scriptable_WeaponBase pistol;
+    public Scriptable_WeaponBase Ak;
+    public Scriptable_WeaponBase mTar;
+    
+
+    public List<Scriptable_WeaponBase> weaponsAvilable;
 
     // Start is called before the first frame update
     void Start()
@@ -47,12 +50,15 @@ public class Player : Humans
         control = GetComponent<PlayerControl>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerCollider = GetComponent<CapsuleCollider2D>();
-        shooting = GetComponent<Shooting>();
-        pistol = GetComponent<Pistol>();
-        ak = GetComponent<AK>();
-        tar = GetComponent<MTAR>();
-        weaponActive = WeaponsActive._Pistol;
+        InstantatieBulletScript = GetComponent<Shoot_Weapon>();
 
+        weaponsAvilable = new List<Scriptable_WeaponBase>()// make it so that player has one weapon and progress to gain new ones over time 
+        {
+            pistol, 
+            //Ak,
+            //mTar
+        };
+        InstantatieBulletScript.CurrentWeapon = pistol;
         StartStats();
     }
     public void StartStats()
@@ -71,7 +77,7 @@ public class Player : Humans
     {
         Vector2 playerFacingDirection = control.GetPlayerFacingDirection();
 
-        UI_CurrencyText.text = currency.ToString();
+        UI_AmmoCount.text = InstantatieBulletScript.CurrentWeapon.cuurentAmmo.ToString();
 
         if (playerState == PlayerState.Dead)
         {
@@ -82,46 +88,48 @@ public class Player : Humans
         {
             Time.timeScale = 1f; // Pause time
         }
+
         if (control.nextWeapon == true)
         {
-            IncrementWeaponState();
+            NextWeapon();
             control.nextWeapon = false;
         }
         if (control.prevWeapon == true)
         {
-            DeCrementWeaponState();
+            PrevWeapon();
             control.prevWeapon = false;
         }
+
+
         if (control.isShooting)
         {
-            switch (weaponActive)
-            {
-                case WeaponsActive._Pistol:
-                    pistol.enabled = true;
-                    pistol.SwitchWeapon(pistol);
-                    pistol.Shoot();
-                    ak.enabled = false;
-                    tar.enabled = false;
-                    break;
-                case WeaponsActive._Ak:
-                    ak.enabled = true;
-                    ak.SwitchWeapon(ak);
-                    ak.Shoot();
-                    tar.enabled = false;
-                    pistol.enabled = false;
-                    break;
-                case WeaponsActive._MTAR:
-                    tar.enabled = true;
-                    tar.SwitchWeapon(tar);
-                    tar.Shoot();
-                    ak.enabled= false;
-                    pistol.enabled = false;
-                    break;
-
-            }
-
+            InstantatieBulletScript.Fire();
             control.isShooting = false;
         }
+        if(control.isReloading)
+        {
+            if (currency > 50)
+            {
+                InstantatieBulletScript.StartReload();
+                currency -= 50;
+                control.isReloading = false;
+            }
+        }
+    }
+
+    public void NextWeapon()
+    {
+        int weaponIndex = weaponsAvilable.IndexOf(InstantatieBulletScript.CurrentWeapon);
+        weaponIndex++;
+        if (weaponIndex >= weaponsAvilable.Count) weaponIndex = 0;
+        InstantatieBulletScript.CurrentWeapon = weaponsAvilable[weaponIndex];
+    }
+    public void PrevWeapon()
+    {
+        int weaponIndex = weaponsAvilable.IndexOf(InstantatieBulletScript.CurrentWeapon);
+        weaponIndex--;
+        if (weaponIndex <= weaponsAvilable.Count) weaponIndex = 0;
+        InstantatieBulletScript.CurrentWeapon = weaponsAvilable[weaponIndex];
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -129,26 +137,26 @@ public class Player : Humans
         {
             this.DmgTaken(25);
         }
-
-        if(other.gameObject.tag == "MystryBox")
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "MystryBox")
         {
-            UI_BarreirText.text = "Press 'F' to Buy new Weapon for " + mystreyBoxAmount;
+            UI_BarreirText.text = "Press 'F' to open";
             UI_BarreirText.enabled = true;
             if (control.IsInteracting == true)
             {
-                if(currency >= mystreyBoxAmount)
-                {
-                    currency -= mystreyBoxAmount;
-                }
-                UI_BarreirText.enabled = false;
+                inMenu = true;
+
             }
-            control.IsInteracting = false;
+            //control.IsInteracting = false;
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "MystryBox")
         {
+            inMenu = false;
             UI_BarreirText.enabled = false;
             control.IsInteracting = false;
         }
@@ -174,6 +182,7 @@ public class Player : Humans
                 control.IsInteracting = false;
             }
         }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -188,32 +197,6 @@ public class Player : Humans
         base.DmgTaken(damage);
         isHit = true;
         
-    }
-    void IncrementWeaponState()
-    {
-        int weaponActiveValue = (int)weaponActive; // Convert enum to integer
-        weaponActiveValue++; // Increment the integer value
-
-        // Cycle through the enum values in a circular manner
-        if (weaponActiveValue >= Enum.GetValues(typeof(WeaponsActive)).Length)
-        {
-            weaponActiveValue = 0; // Reset to the first enum value if it exceeds the enum length
-        }
-
-        weaponActive = (WeaponsActive)weaponActiveValue; // Convert back to enum type
-    }
-    void DeCrementWeaponState()
-    {
-        int weaponActiveValue = (int)weaponActive; // Convert enum to integer
-        weaponActiveValue--; // Increment the integer value
-
-        // Cycle through the enum values in a circular manner
-        if (weaponActiveValue < 0)
-        {
-            weaponActiveValue = Enum.GetValues(typeof(WeaponsActive)).Length - 1;
-        }
-
-        weaponActive = (WeaponsActive)weaponActiveValue; // Convert back to enum type
     }
     public override void BasicAttack(float dmg)     
     {

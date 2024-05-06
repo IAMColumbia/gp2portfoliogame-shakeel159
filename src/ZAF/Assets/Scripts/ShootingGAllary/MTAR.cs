@@ -22,7 +22,6 @@ internal class MTAR : Shooting, IWeapon
     {
         base.Update();
     }
-
     public override void Shoot()
     {
         base.Shoot();

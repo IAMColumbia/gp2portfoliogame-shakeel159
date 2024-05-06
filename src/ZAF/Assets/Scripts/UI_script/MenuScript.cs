@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
+    public bool isBuyingMtar;
+    public bool isBuyingAK;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +23,13 @@ public class MenuScript : MonoBehaviour
     public void RestartBTN()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void BuyMtarbTN()
+    {
+        isBuyingMtar = true;    
+    }
+    public void BuyAkBTN()
+    {
+        isBuyingAK = true;
     }
 }

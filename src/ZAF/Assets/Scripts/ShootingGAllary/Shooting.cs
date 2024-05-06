@@ -9,7 +9,7 @@ public interface IWeapon
     void Shoot();
 }
 
-public class Shooting : MonoBehaviour
+public class Shooting : MonoBehaviour , IWeapon
 {
     public IWeapon currentWeapon;
     // Public property to access currentWeapon
@@ -60,17 +60,11 @@ public class Shooting : MonoBehaviour
 
     public virtual void Shoot()
     {
-        if (shotRateMillisocondsTimer <= 0)
-        {
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            rb.AddForce(-firePoint.up * bulletForce, ForceMode2D.Impulse);
-            // Reset the shooting timer
-            shotRateMillisocondsTimer = shotRateMilliseconds;
-
-        }
-
-       
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+        rb.AddForce(-firePoint.up * bulletForce, ForceMode2D.Impulse);
+        // Reset the shooting timer
+        shotRateMillisocondsTimer = shotRateMilliseconds;
 
     }
 
