@@ -59,6 +59,10 @@ public class ZombieBehaviour : Humans
     // Update is called once per frame
     void Update()
     {
+        if (isCollidingWithWall == true)
+        {
+            collisionStartTime += Time.deltaTime;
+        }
         if(lvls.currentRound == 5)
         {
             moveSpeed = 4;
@@ -201,11 +205,26 @@ public class ZombieBehaviour : Humans
         }
         if (collision.gameObject.gameObject.tag == "wall")
         {
-            isCollidingWithWall = true;
-            collisionStartTime += Time.deltaTime;
-            if (collisionStartTime >= 6f)
+            if(enemyState != EnemyState.stuckOnWall)
             {
-                enemyState = EnemyState.stuckOnWall;
+                isCollidingWithWall = true;
+
+                if (collisionStartTime >= 4f)
+                {
+                    collisionStartTime = 0;
+                    isCollidingWithWall = false;
+                    enemyState = EnemyState.stuckOnWall;
+                }
+            }
+            if(enemyState == EnemyState.stuckOnWall)
+            {
+                isCollidingWithWall = true;
+                if(collisionStartTime >= 6f)
+                {
+                    collisionStartTime = 0;
+                    isCollidingWithWall = false;
+                    enemyState=EnemyState.chasingPlayer;
+                }
             }
         }
     }
@@ -222,15 +241,15 @@ public class ZombieBehaviour : Humans
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.gameObject.tag == "wall")
-        {
-            isCollidingWithWall = false;
-            collisionStartTime = 0;
-            if (enemyState == EnemyState.stuckOnWall)
-            {
-                enemyState = EnemyState.chasingPlayer;
-            }
-        }
+        //if (collision.gameObject.gameObject.tag == "wall")
+        //{
+        //    isCollidingWithWall = false;
+        //    collisionStartTime = 0;
+        //    //if (enemyState == EnemyState.stuckOnWall)
+        //    //{
+        //    //    enemyState = EnemyState.chasingPlayer;
+        //    //}
+        //}
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

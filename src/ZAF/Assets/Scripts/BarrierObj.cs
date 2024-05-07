@@ -17,7 +17,7 @@ public class BarrierObj : MonoBehaviour
     public float takeDamageTimer;
 
     public bool isBrokenState;
-    public bool startTimer;                                                                                                                                      bool deelDamageNow;
+    public bool startTimer;                                                                                                                                   
 
     public SpriteRenderer spriteRenderer;
     public BoxCollider2D boxCollider;
@@ -86,6 +86,17 @@ public class BarrierObj : MonoBehaviour
             }
             if (collision.gameObject.tag == "Zombie")
             {
+                boxCollider.enabled = false;
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (state == BarrierState.InBetween)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                state = BarrierState.broken;
                 boxCollider.enabled = false;
             }
         }

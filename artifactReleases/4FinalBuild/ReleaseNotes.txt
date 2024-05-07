@@ -1,13 +1,16 @@
-Release Notes version 3 Final
+Game Name: ZAF   =>  Zombie Assualt Force
 
-Goal:
+Game Description Short: as a survivor of a zombie apocolypse your sole plan is to go out in a blaze of glory in a last stand against a horde of zombies.
 
--fix berriar codeto hold different states // for better tracking of time and state of barrier
--start work on different weapons
--start work on mystary box or store system
+Game Description Long: The world has drowned in pain and sorrow turning the flesh of humans inside out, creating blood hungry monsters that will do anything to satisfy there needs. these are zombies and as the sole survivor in your old cabin, you decide to make a last stand before everything turns dark. survive and shoot zombies to see how far you as the player can get before meeting there glorious end in this god forsaken world. 
 
-Steps To Take/Taken
-Goal One: Barrier
-the barreir now has 2 different states at are being used, original state only holds bool value stating that it is not broken; if it is broken via health <= 0 state changes to broken;
-that state is then registered to zombies in scene so they can change there own state to chasing barrier(if barrier active) to chasing player.
-(DONE)
+Credits: 
+ASSERTS USED: 
+https://laplas-games-inc.itch.io/top-down-shooter-asset-pack
+
+scriptable objects tutorial:
+https://www.youtube.com/watch?v=kXbQMhwj5Uc //Shooting logic
+
+Genre:2d, Action, top-down-shooter, zombies, survival
+
+Additional Notes: Art NOT THE FOCUS, this is soley showcasing my current Programming knowloadge tryign to implement stretagy patterns involved in game design.

@@ -77,7 +77,7 @@ public class Player : Humans
     {
         Vector2 playerFacingDirection = control.GetPlayerFacingDirection();
 
-        UI_AmmoCount.text = InstantatieBulletScript.CurrentWeapon.cuurentAmmo.ToString();
+        UI_AmmoCount.text = "Ammo: " + InstantatieBulletScript.CurrentWeapon.cuurentAmmo.ToString();
 
         if (playerState == PlayerState.Dead)
         {

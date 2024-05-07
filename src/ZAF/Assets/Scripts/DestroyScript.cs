@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DestroyScript : MonoBehaviour
 {
+    public float airTime;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +15,12 @@ public class DestroyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        airTime += Time.time;
+
+        if(airTime > 5000)
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {

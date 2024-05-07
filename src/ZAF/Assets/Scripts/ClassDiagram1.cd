@@ -1,59 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Humans" Collapsed="true">
-    <Position X="0.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAQAAACIAKAgAAAAAACAAAQgEAAEAAIAEAAAEAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\Humans.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Player">
-    <Position X="0.5" Y="1.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="Player.WeaponsActive" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\Scripts\Player.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AASAACSAAWBBBoQ4AABIAAQgEAAAAQEAQgAgAAAAQAA=</HashCode>
-      <FileName>Assets\Scripts\Player.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ZombieBehaviour">
-    <Position X="2.25" Y="1.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="ZombieBehaviour.EnemyState" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Assets\Scripts\ZombieScripts\ZombieBehaviour.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AQQAAIAAESAAAEQEIABcEAAAEEAAAAEEAACkACAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ZombieScripts\ZombieBehaviour.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="PlayerControl" Collapsed="true">
-    <Position X="0.5" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABQABgBAAqEEAAAMBABAQAACAAAACAEAASAAAAAAABA=</HashCode>
-      <FileName>Assets\Scripts\PlayerControl.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="BarrierObj">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+    <Position X="13.75" Y="6.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
       <Compartment Name="Methods" Collapsed="true" />
@@ -63,68 +11,95 @@
       <FileName>Assets\Scripts\BarrierObj.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Shooting">
-    <Position X="8.5" Y="0.5" Width="1.5" />
+  <Class Name="Scriptable_WeaponBase">
+    <Position X="11.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAAAAIAAAAAAAAAAAAQAAAGAgIAAAAAAFAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Scriptable_weapons\Scriptable_WeaponBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shoot_Weapon">
+    <Position X="11.25" Y="3.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Properties" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAQACAAQACAABIAAAEAIAAAAAAAAAkQAAAAAAAACAAA=</HashCode>
-      <FileName>Assets\Scripts\ShootingGAllary\Shooting.cs</FileName>
+      <HashCode>IAQAAAAAhKACAAAAAAAAAACAAAAEAAAAAAAQAAECAAA=</HashCode>
+      <FileName>Assets\Scripts\Scriptable_weapons\Shoot_Weapon.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AK">
-    <Position X="8.5" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="GameManager">
+    <Position X="14" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ShootingGAllary\AK.cs</FileName>
+      <HashCode>AAQAIAAAACAAAAAAAQAAIAAwAAAoAEAAAAAAQAAAACE=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MTAR">
-    <Position X="6.25" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="LevelCount">
+    <Position X="15.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAQACAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ShootingGAllary\MTAR.cs</FileName>
+      <HashCode>AAQAAACgACCAAAAAAAAAQAQAAAAAACABAAAAAAAAQAA=</HashCode>
+      <FileName>Assets\Scripts\LevelCount.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="Pistol">
-    <Position X="10.75" Y="2.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
+  <Class Name="MenuScript">
+    <Position X="15.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ShootingGAllary\Pistol.cs</FileName>
+      <HashCode>AAQAAAAAACEAAAEQIAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\UI_script\MenuScript.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Humans" Collapsed="true">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Humans.PlayerState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\Humans.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAAACIAKAgAAAAAACAAAQgEAAEAAIAEAAAEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Humans.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQSAAACAA2BBBgQ4BABIAIQgAAAAAAECAgBgEAAgAAA=</HashCode>
+      <FileName>Assets\Scripts\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerControl" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CBQABgBAAqEEAAAMBABAQAACAAAACAEAASAAAAAAARA=</HashCode>
+      <FileName>Assets\Scripts\PlayerControl.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZombieBehaviour">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ZombieBehaviour.EnemyState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\ZombieScripts\ZombieBehaviour.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQQAAIAAESAAAEQUIABcEAAAEEAAAAEAAACkACAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ZombieScripts\ZombieBehaviour.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Class Name="ZombieSpawner" Collapsed="true">
-    <Position X="2.25" Y="4.25" Width="1.5" />
+    <Position X="5.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gAQAAYAAACABQAAAAAAAAAACAAAAAABAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\ZombieScripts\ZombieSpawner.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="IWeapon">
-    <Position X="10.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\ShootingGAllary\Shooting.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Enum Name="BarrierState">
-    <Position X="4.25" Y="2" Width="1.5" />
+    <Position X="13.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAABAAAAEAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\BarrierObj.cs</FileName>
